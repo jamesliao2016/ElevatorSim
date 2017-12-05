@@ -6,7 +6,7 @@ from elevator import Elevator
 from elevator_group import ElevatorGroup
 from elevator import types, TYPE_F, TYPE_L, TYPE_I, TYPE_E
 
-totalTrialNum = 200
+totalTrialNum = 100
 ELEVATOR_PASSENGERS_STAT = 'elevator_%s_%d_num_passengers'
 ELEVATOR_IDLE_STAT = 'elevator_%s_%d_idle_time'
 ELEVATOR_BUSY_STAT = 'elevator_%s_%d_busy_time'
