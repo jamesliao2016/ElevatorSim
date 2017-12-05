@@ -6,6 +6,7 @@ from elevator import Elevator
 from elevator_group import ElevatorGroup
 from elevator import types, TYPE_F, TYPE_L, TYPE_I, TYPE_E
 
+totalTrialNum = 200
 ELEVATOR_PASSENGERS_STAT = 'elevator_%s_%d_num_passengers'
 ELEVATOR_IDLE_STAT = 'elevator_%s_%d_idle_time'
 ELEVATOR_BUSY_STAT = 'elevator_%s_%d_busy_time'
@@ -45,14 +46,14 @@ class ElevatorSystem(System):
     def update(self):
         # decide whether or not new passengers need to be generated for each
         # group of elevators based on where we are in the time period
-    	time_in_minutes = self.clock.time() / 60
+        time_in_minutes = self.clock.time() / 60
         for elevator_group in self.elevator_groups:
-    		if elevator_group.next_gen <= time_in_minutes:
-        		while elevator_group.next_gen <= time_in_minutes:
-        			elevator_group.next_gen += 5
-        		elevator_group.create_passengers(self.clock.time())
-                # mark down this amount
-                self.stats.add(GROUP_POOL_STAT % types[elevator_group.type],
+            if elevator_group.next_gen <= time_in_minutes:
+                while elevator_group.next_gen <= time_in_minutes:
+                    elevator_group.next_gen += 5
+                    elevator_group.create_passengers(self.clock.time())
+                    # mark down this amount
+                    self.stats.add(GROUP_POOL_STAT % types[elevator_group.type],
                                elevator_group.pool)
 
     def handle(self, event):
@@ -149,7 +150,7 @@ class ElevatorSystem(System):
 #
 # This can be used for Correlated Sampling
 system = ElevatorSystem()
-stats = system.run(2000, period.ONE_DAY, seed=0xDEADBEEF)
+stats = system.run(totalTrialNum, period.ONE_DAY, seed=0xDEADBEEF)
 
 # now that we have the stats after x trials, we want to specify the order
 # in which they're printed out for easy reading
